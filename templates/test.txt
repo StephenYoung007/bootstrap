@@ -1,0 +1,22 @@
+{% for i in range(5) %}
+    <div class="container square">
+        <div class="row">
+            <div class="col-sm-1 index">
+                {{ name[i] }}
+            </div>
+            <div class="col-sm-11">
+                <div class="progress">
+                    <div id="1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent_before[i] }}%">
+                        {{ before[i] }}
+                    </div>
+                </div>
+                <div class="progress">
+                    <div id="2" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent_after[i] }}%">
+                        {{ after[i] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+{% endfor %}

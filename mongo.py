@@ -17,26 +17,28 @@ ori = {
     'data': '27017'
 }
 
-def find():
+def find(data):
     myquery = {'name': 'test'}
-    back =  list(mycol.find(myquery))
-    return back[0]['data']
+    back =  mycol.find(myquery)
+    return back[0][data]
 
-def insert(data):
+def insert(name, data):
     myquery = {'name': 'test'}
-    newvalues_set = {"$set": {"data": data}}
+    newvalues_set = {"$set": {name: data}}
     mycol.update_one(myquery, newvalues_set)
 
 if __name__ == '__main__':
-    s.bind(('', PORT))
-    # mycol.insert(ori)
-    # while True:
-    #     data, address = s.recvfrom(65535)
-    #     data = data.decode('utf-8')
-    myquery = {'name': 'test'}
-    #     print(data,'data')
-    newvalues_set = {"$set": {"data": 'hshsh'}}
-    mycol.update_one(myquery, newvalues_set)
+    before = find("before")
+    print(before)
+    # s.bind(('', PORT))
+    # # mycol.insert(ori)
+    # # while True:
+    # #     data, address = s.recvfrom(65535)
+    # #     data = data.decode('utf-8')
+    # myquery = {'name': 'test'}
+    # #     print(data,'data')
+    # newvalues_set = {"$set": {"data": 'hshsh'}}
+    # mycol.update_one(myquery, newvalues_set)
     #     value = list(mycol.find(myquery))
     #     print(value)
 
