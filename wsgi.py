@@ -11,9 +11,9 @@ application = app.app
 
 """
 建立一个软连接
-ln -s /var/www/bootstrap/bootstrap.conf /etc/supervisor/conf.d/bbs.conf
+ln -s /var/www/bootstrap/bootstrap.conf /etc/supervisor/conf.d/bootstrap.conf
 
-ln -s /var/www/bootstrap/bootstrap.nginx /etc/nginx/sites-enabled/bbs
+ln -s /var/www/bootstrap/bootstrap.nginx /etc/nginx/sites-enabled/bootstrap.nginx
 
 
 
