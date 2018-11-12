@@ -28,10 +28,12 @@ def insert(name, data):
     mycol.update_one(myquery, newvalues_set)
 
 if __name__ == '__main__':
-    before = find("before")
-    print(before)
+    # before = find("before")
+    # print(before)
     # s.bind(('', PORT))
-    # # mycol.insert(ori)
+    mycol.insert_one(ori)
+    name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
+    insert("index", name)
     # # while True:
     # #     data, address = s.recvfrom(65535)
     # #     data = data.decode('utf-8')

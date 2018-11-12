@@ -47,21 +47,23 @@ def hello():
 def figure():
     if request.method == 'POST':
         data = request.form
+        print(data)
         before = data.get('before')
         after = data.get("after")
+        print("*"*30)
+        print("before", before)
+        print("after", after)
         if ret(before) and ret(after):
-            print(group(before+','+after))
+            # print(group(before+','+after))
             a = final(before)
             percent_a = percent(a)
             b = final(after)
             percent_b = percent(b)
-            print(b)
+            # print(b)
             insert("before",a)
             insert("after", b)
             insert("percent_before", percent_a)
             insert("percent_after", percent_b)
-            name = ["CO2","甲醛","湿度","温度","PM2.5"]
-            insert("index", name)
             print("before: {}; after: {}".format(a, b))
             print('*'*30)
             # return render_template('re.txt', seq = find())
