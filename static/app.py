@@ -7,18 +7,17 @@ import random
 
 app = Flask(__name__)
 
-from mongo import find_, insert_, insert_new
+from mongo import find, insert
 from regular import *
 
 
 @app.route('/')
 def hello_world():
-    id = 17017
-    before = find_(id, "before")
-    after = find_(id, "after")
-    percent_before = find_(id, "percent_before")
-    percent_after = find_(id, "percent_after")
-    name = find_(id, "index")
+    before = find("before")
+    after = find("after")
+    percent_before = find("percent_before")
+    percent_after = find("percent_after")
+    name = find("index")
     return render_template('index.html', before = before, after = after, percent_before = percent_before, percent_after = percent_after, name = name)
 
 def generate():
@@ -44,17 +43,14 @@ def hello():
 
         # data = request.form.get('index', '')
         print(data)
-        # insert(data)
+        insert(data)
         return ''
     else:
         return 'nothing'
 
 @app.route('/figure', methods=['GET', 'POST'])
 def figure():
-    li = int(request.args.get("id"))
-    id = li
     if request.method == 'POST':
-        insert_new(id)
         data = request.form
         print(data)
         before = data.get('before')
@@ -69,10 +65,10 @@ def figure():
             b = final(after)
             percent_b = percent(b)
             # print(b)
-            insert_(id, "before",a)
-            insert_(id, "after", b)
-            insert_(id, "percent_before", percent_a)
-            insert_(id, "percent_after", percent_b)
+            insert("before",a)
+            insert("after", b)
+            insert("percent_before", percent_a)
+            insert("percent_after", percent_b)
             print("before: {}; after: {}".format(a, b))
             print('*'*30)
             # return render_template('re.txt', seq = find())
@@ -81,14 +77,37 @@ def figure():
             print("data form is wrong")
             return "invalid data form"
     elif request.method == "GET":
-        # id = 17017
-        before = find_(id, "before")
+        before = find("before")
         # print("before", before)
-        after = find_(id, "after")
-        percent_before = find_(id, "percent_before")
-        percent_after = find_(id, "percent_after")
-        name = find_(id, "index")
-        return render_template("test.txt", before = before, after = after, percent_before = percent_before, percent_after = percent_after, name = name)
+        after = find("after")
+        percent_before = find("percent_before")
+        percent_after = find("percent_after")
+        name = find("index")
+        del before[2]
+        del after[2]
+        del percent_before[2]
+        del percent_after[2]
+        del name[2]
+        return render_template("test.txt", before = after, after = before, percent_before = percent_after, percent_after = percent_before, name = name)
+
+@app.route("/index", methods=['GET', 'POST'])
+def index():
+    before = find("before")
+    # print("before", before)
+    after = find("after")
+    # percent_before = find("percent_before")
+    # percent_after = find("percent_after")
+    # name = find("index")
+    del before[2]
+    del after[2]
+    # del percent_before[2]
+    # del percent_after[2]
+    # del name[2]
+    # return render_template("test.txt", before=after, after=before, percent_before=percent_after, percent_after=percent_before, name=name)
+    import json
+    list = after + before
+    # result = [{value * 2: value for value in i} for i in list]
+    return (json.dumps(list))
 
 # return render_template("index.html")
 
@@ -99,23 +118,6 @@ def figure():
 #         print(data)
 #         return ''
 #         # insert(data)
-
-@app.route("/index", methods=['GET', 'POST'])
-def index():
-    id = 17017
-    before = find_(id, "before")
-    # print("before", before)
-    after = find_(id, "after")
-    import json
-    list = after + before
-    # result = [{value * 2: value for value in i} for i in list]
-    return (json.dumps(list))
-
-
-
-
-
-
 
 @app.route('/tool')
 def tool():

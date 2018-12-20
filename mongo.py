@@ -13,27 +13,41 @@ client=pymongo.MongoClient("localhost", 27017)
 db=client['stephen']
 mycol = db['test']
 ori = {
-    'name': 'test',
+    'name': 17017,
     'data': '27017'
 }
 
-def find(data):
-    myquery = {'name': 'test'}
+def find_(id, data):
+    myquery = {"id": id}
     back =  mycol.find(myquery)
-    return back[0][data]
+    # return back[0][data]
+    li = list(back)[0][data]
+    del li[2]
+    return li
 
-def insert(name, data):
-    myquery = {'name': 'test'}
+def insert_(id, name, data):
+    myquery = {'id': id}
     newvalues_set = {"$set": {name: data}}
     mycol.update_one(myquery, newvalues_set)
+
+def insert_new(id):
+    myquery = {
+        "id" : id,
+    }
+    myCursor = mycol.find(myquery)
+    if myCursor.count() == 0:
+        mycol.insert(myquery)
+
 
 if __name__ == '__main__':
     # before = find("before")
     # print(before)
     # s.bind(('', PORT))
-    mycol.insert_one(ori)
+    # insert_new(17018)
+    print(type(find_(17017, "percent_before")))
+    # mycol.insert_one(ori)
     name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
-    insert("index", name)
+    insert(17018, "index", name)
     # # while True:
     # #     data, address = s.recvfrom(65535)
     # #     data = data.decode('utf-8')

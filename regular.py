@@ -32,6 +32,24 @@ def final(data):
     return record
 
 
+# def percent(index):
+#     '''
+#     max = [1000, 0.8, 100, 90, 250]
+#     :param index:CO2、甲醛、湿度、温度、PM2.5
+#     :return:
+#     '''
+#     percent = []
+#     percent.append(round((index[0] + 20) * 1.25))
+#     percent.append(index[1])
+#     percent.append(round(index[2] / 10))
+#     percent.append(round(index[3] * 125))
+#     percent.append(round(index[4] / 2.5))
+#     for i in range(5):
+#         if percent[i] > 100:
+#             percent[i] = 100
+#     return percent
+
+
 def percent(index):
     '''
     max = [1000, 0.8, 100, 90, 250]
@@ -39,15 +57,18 @@ def percent(index):
     :return:
     '''
     percent = []
+    data = ['', '', '', '', '']
     percent.append(round((index[0] + 20) * 1.25))
     percent.append(index[1])
     percent.append(round(index[2] / 10))
     percent.append(round(index[3] * 125))
     percent.append(round(index[4] / 2.5))
     for i in range(5):
+        data[i] = str(percent[i]) + r"%;"
         if percent[i] > 100:
             percent[i] = 100
-    return percent
+            data[i] = str(percent[i]) + r"%; color: red;"
+    return data
 
 
 if __name__ == '__main__':
