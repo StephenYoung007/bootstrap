@@ -37,6 +37,8 @@ def insert_new(id):
     myCursor = mycol.find(myquery)
     if myCursor.count() == 0:
         mycol.insert(myquery)
+    name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
+    insert_(id, "index", name)
 
 
 if __name__ == '__main__':
@@ -46,8 +48,6 @@ if __name__ == '__main__':
     # insert_new(17018)
     print(type(find_(17017, "percent_before")))
     # mycol.insert_one(ori)
-    name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
-    insert(17018, "index", name)
     # # while True:
     # #     data, address = s.recvfrom(65535)
     # #     data = data.decode('utf-8')
