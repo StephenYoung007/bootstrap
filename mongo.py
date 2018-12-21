@@ -25,6 +25,14 @@ def find_(id, data):
     del li[2]
     return li
 
+def findOrigin(id, data):
+    myquery = {"id": id}
+    back =  mycol.find(myquery)
+    # return back[0][data]
+    li = list(back)[0][data]
+    # del li[2]
+    return li
+
 def insert_(id, name, data):
     myquery = {'id': id}
     newvalues_set = {"$set": {name: data}}

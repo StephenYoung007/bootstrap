@@ -7,47 +7,21 @@ import random
 
 app = Flask(__name__)
 
-from mongo import find_, insert_, insert_new
+from mongo import find_, insert_, insert_new, findOrigin
 from regular import *
 
 
-@app.route('/')
-def hello_world():
-    id = 27017
+@app.route('/<int:now>/')
+def hello_world(now):
+    id = now
     before = find_(id, "before")
     after = find_(id, "after")
     percent_before = find_(id, "percent_before")
     percent_after = find_(id, "percent_after")
     name = find_(id, "index")
-    return render_template('index.html', before = before, after = after, percent_before = percent_before, percent_after = percent_after, name = name)
-
-def generate():
-    a = []
-    for i in range(10):
-        num = random.randint(10,100)
-        a.append(num)
-    return a
+    return render_template('index.html', before = before, after = after, percent_before = percent_before, percent_after = percent_after, name = name, id = id)
 
 
-
-@app.route('/test',methods=['GET', 'POST'])
-def hello():
-    if request.method == 'GET':
-        # data = str(find())
-        # index = [int(i) for i in data.split(",")]
-        index = generate()
-        print(index)
-        return render_template("test.txt", a = index)
-    elif request.method == 'POST':
-        data = request.args.get('index', '')
-        my = request.form.get('index')
-
-        # data = request.form.get('index', '')
-        print(data)
-        # insert(data)
-        return ''
-    else:
-        return 'nothing'
 
 @app.route('/figure', methods=['GET', 'POST'])
 def figure():
@@ -90,25 +64,27 @@ def figure():
         name = find_(id, "index")
         return render_template("test.txt", before = before, after = after, percent_before = percent_before, percent_after = percent_after, name = name)
 
-# return render_template("index.html")
+@app.route("/co2/data", methods=['GET', 'POST'])
+def co2_data():
+    id = int(request.args.get("id"))
+    after = findOrigin(id, "after")
+    return str(after[2])
 
-# @app.route('/figure',methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'GET':
-#         data = request.args.get('index', '')
-#         print(data)
-#         return ''
-#         # insert(data)
+
+@app.route("/co2/<int:id>", methods=['GET', 'POST'])
+def co2(id):
+    id = int(id)
+    after = findOrigin(id, "after")
+    data = after[2]
+    return render_template("co2.html", id = id, data = data)
 
 @app.route("/index", methods=['GET', 'POST'])
 def index():
-    id = 17017
+    id = 2
     before = find_(id, "before")
-    # print("before", before)
     after = find_(id, "after")
     import json
-    list = after + before
-    # result = [{value * 2: value for value in i} for i in list]
+    list = before + after
     return (json.dumps(list))
 
 
