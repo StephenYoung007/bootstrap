@@ -20,9 +20,10 @@
 function dataTransform(value) {
     var figure = Number(value);
     if (value > 1000){
-        document.getElementById("co2").style = "red";
+        document.getElementById("co2").style.color = "red";
         document.getElementById("value").innerHTML = figure + "<p>请开窗通风</p>";
     }else {
+        document.getElementById("co2").style.color = "green";
         document.getElementById("value").innerHTML = figure;
     }
 
@@ -52,7 +53,7 @@ function cycle() {
     </style>
 </head>
 <body>
-<div id="co2">
+<div id="co2" style="color: green">
     <p>
         CO2:<span id = value>{{ value }}</span>
     </p>
