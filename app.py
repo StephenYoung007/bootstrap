@@ -10,6 +10,10 @@ app = Flask(__name__)
 
 from mongo import find_, insert_, insert_new, findOrigin
 from regular import *
+from utilis import format_time
+
+
+
 
 
 @app.route('/<int:now>/')
@@ -41,6 +45,8 @@ def figure():
             percent_a = percent(a)
             b = final(after)
             percent_b = percent(b)
+            time = format_time()
+            insert_(id, "time", time)
             insert_(id, "before",a)
             insert_(id, "after", b)
             insert_(id, "percent_before", percent_a)
@@ -89,9 +95,11 @@ def index():
 def tool():
     return render_template('form.html')
 
+
 @app.route('/myip', methods=['GET'])
 def get_my_ip():
-    return jsonify({'ip': request.remote_addr}), 200
+    ip = request.headers['X-Forwarded-For']
+    return jsonify({'ip': ip}), 200
 
 
 if __name__ == '__main__':
