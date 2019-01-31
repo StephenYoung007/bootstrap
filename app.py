@@ -8,9 +8,16 @@ from flask import (
 app = Flask(__name__)
 
 
-from mongo import find_, insert_, insert_new, findOrigin
+from mongo import find_, insert_, insert_new, findOrigin, find_rss
 from regular import *
 from utilis import format_time
+from json2rss import to_links
+
+
+@app.route("/rss")
+def rss():
+    node = find_rss(80)
+    return to_links(node)
 
 
 

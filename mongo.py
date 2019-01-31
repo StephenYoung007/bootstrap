@@ -25,6 +25,12 @@ def find_(id, data):
     del li[2]
     return li
 
+def find_rss(id):
+    myquery = {"id": id}
+    back =  mycol.find(myquery)
+    node = list(back)[0]["config"]
+    return node
+
 def findOrigin(id, data):
     myquery = {"id": id}
     back =  mycol.find(myquery)
@@ -47,6 +53,17 @@ def insert_new(id):
         mycol.insert(myquery)
     name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
     insert_(id, "index", name)
+
+
+def insert_rss(id, data):
+    myquery = {
+        "id" : id,
+    }
+    myCursor = mycol.find(myquery)
+    if myCursor.count() == 0:
+        mycol.insert(myquery)
+    # name = ["温度", "湿度", "CO2", "甲醛", "PM2.5"]
+    insert_(id, "config", data)
 
 
 if __name__ == '__main__':
